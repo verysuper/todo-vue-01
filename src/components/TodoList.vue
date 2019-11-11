@@ -7,8 +7,9 @@
            @keyup.enter="addTodo"
     >
     <div v-for="(todo,index) in todos" :key="todo.id" class="todo-item">
-      <div>
-        {{ todo.title }}
+      <div class="todo-item-left">
+        <div v-if="!todo.editing" class="todo-item-label" @dblclick="editTodo(todo)">{{ todo.title }}</div>
+        <input v-else type="text" v-model="todo.title" class="todo-item-edit">
       </div>
       <div class="remove-item" @click="removeTodo(index)">
         &times;
@@ -53,6 +54,9 @@
                 this.newTodo = '';
                 this.idForTodo++;
             },
+            editTodo(todo){
+                todo.editing = true;
+            },
             removeTodo(index){
                 this.todos.splice(index,1);
             },
@@ -84,6 +88,31 @@
     margin-left: 14px;
     &:hover {
       color: black;
+    }
+  }
+
+  .todo-item-left { // later
+    display: flex;
+    align-items: center;
+  }
+
+  .todo-item-label {
+    padding: 10px;
+    border: 1px solid white;
+    margin-left: 12px;
+  }
+
+  .todo-item-edit {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-left: 12px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc; //override defaults
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+
+    &:focus {
+      outline: none;
     }
   }
 </style>
