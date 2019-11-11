@@ -6,30 +6,33 @@
            v-model="newTodo"
            @keyup.enter="addTodo"
     >
-    <div v-for="(todo,index) in todosFiltered" :key="todo.id" class="todo-item">
-      <div class="todo-item-left">
-        <input type="checkbox" v-model="todo.completed">
-        <div v-if="!todo.editing"
-             class="todo-item-label"
-             @dblclick="editTodo(todo)"
-             :class="{ completed : todo.completed }"
-        >
-          {{ todo.title }}
+    <transition-group name="fade" enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutDown">
+      <div v-for="(todo,index) in todosFiltered" :key="todo.id" class="todo-item">
+        <div class="todo-item-left">
+          <input type="checkbox" v-model="todo.completed">
+          <div v-if="!todo.editing"
+               class="todo-item-label"
+               @dblclick="editTodo(todo)"
+               :class="{ completed : todo.completed }"
+          >
+            {{ todo.title }}
+          </div>
+          <input v-else
+                 type="text"
+                 v-model="todo.title"
+                 class="todo-item-edit"
+                 @blur="doneEdit(todo)"
+                 @keyup.enter="doneEdit(todo)"
+                 @keyup.esc="cancelEdit(todo)"
+                 v-focus
+          >
         </div>
-        <input v-else
-               type="text"
-               v-model="todo.title"
-               class="todo-item-edit"
-               @blur="doneEdit(todo)"
-               @keyup.enter="doneEdit(todo)"
-               @keyup.esc="cancelEdit(todo)"
-               v-focus
-        >
+        <div class="remove-item" @click="removeTodo(index)">
+          &times;
+        </div>
       </div>
-      <div class="remove-item" @click="removeTodo(index)">
-        &times;
-      </div>
-    </div>
+    </transition-group>
+
     <div class="extra-container">
       <div>
         <label>
@@ -49,7 +52,9 @@
       </div>
 
       <div>
-        <button v-if="showClearCompletedButton" @click="clearCompleted">Clear Completed</button>
+        <transition name="fade">
+          <button v-if="showClearCompletedButton" @click="clearCompleted">Clear Completed</button>
+        </transition>
       </div>
 
     </div>
@@ -152,6 +157,7 @@
 </script>
 
 <style lang="scss">
+  @import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css");
   .todo-input {
     width: 100%;
     padding: 10px 18px;
@@ -167,7 +173,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    animation-duration: 0.3s;
+    animation-duration: 0.2s;
   }
 
   .remove-item {
@@ -236,4 +242,12 @@
     background: lightgreen;
   }
 
+  // CSS Transitions
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .2s;
+  }
+
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
 </style>
