@@ -49,7 +49,7 @@
       </div>
 
       <div>
-        clear completed
+        <button v-if="showClearCompletedButton" @click="clearCompleted">Clear Completed</button>
       </div>
 
     </div>
@@ -99,6 +99,9 @@
 
                 return this.todos
             },
+            showClearCompletedButton() {
+                return this.todos.filter(todo => todo.completed).length > 0
+            },
         },
         directives: {
             focus: {
@@ -141,6 +144,9 @@
             checkAllTodos() {
                 this.todos.forEach((todo) => todo.completed = event.target.checked)
             },
+            clearCompleted() {
+                this.todos = this.todos.filter(todo => !todo.completed)
+            }
         }
     }
 </script>
