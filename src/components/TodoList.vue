@@ -4,6 +4,7 @@
            class="todo-input"
            placeholder="what needs to be done"
            v-model="newTodo"
+           @keyup.enter="addTodo"
     >
     <div v-for="todo in todos" :key="todo.id" class="todo-item">
       {{ todo.title }}
@@ -17,6 +18,7 @@
         data(){
             return{
                 newTodo:'',
+                idForTodo:3,
                 todos: [
                     {
                         'id': 1,
@@ -31,6 +33,20 @@
                         'editing': false,
                     },
                 ]
+            }
+        },
+        methods:{
+            addTodo(){
+                if (this.newTodo.trim().length == 0) {
+                    return
+                }
+                this.todos.push({
+                    'id': this.idForTodo,
+                    'title': this.newTodo,
+                    'completed': false,
+                });
+                this.newTodo = '';
+                this.idForTodo++;
             }
         }
     }
