@@ -15,6 +15,7 @@
                class="todo-item-edit"
                @blur="doneEdit(todo)"
                @keyup.enter="doneEdit(todo)"
+               @keyup.esc="cancelEdit(todo)"
                v-focus
         >
       </div>
@@ -32,6 +33,7 @@
             return{
                 newTodo:'',
                 idForTodo:3,
+                beforeEditCache:'',
                 todos: [
                     {
                         'id': 1,
@@ -61,17 +63,26 @@
                     return
                 }
                 this.todos.push({
-                    'id': this.idForTodo,
-                    'title': this.newTodo,
-                    'completed': false,
+                    id: this.idForTodo,
+                    title: this.newTodo,
+                    completed: false,
+                    editing: false,
                 });
                 this.newTodo = '';
                 this.idForTodo++;
             },
             editTodo(todo){
+                this.beforeEditCache = todo.title;
                 todo.editing = true;
             },
             doneEdit(todo){
+                if (todo.title.trim() == '') {
+                    todo.title = this.beforeEditCache
+                }
+                todo.editing = false;
+            },
+            cancelEdit(todo){
+                todo.title = this.beforeEditCache;
                 todo.editing = false;
             },
             removeTodo(index){
