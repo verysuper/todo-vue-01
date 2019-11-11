@@ -5,7 +5,9 @@
            placeholder="what needs to be done"
            v-model="newTodo"
     >
-    {{ newTodo }}
+    <div v-for="todo in todos" :key="todo.id" class="todo-item">
+      {{ todo.title }}
+    </div>
   </div>
 </template>
 
@@ -15,6 +17,20 @@
         data(){
             return{
                 newTodo:'',
+                todos: [
+                    {
+                        'id': 1,
+                        'title': 'Finish Vue Screencast',
+                        'completed': false,
+                        'editing': false,
+                    },
+                    {
+                        'id': 2,
+                        'title': 'Take over world',
+                        'completed': false,
+                        'editing': false,
+                    },
+                ]
             }
         }
     }
