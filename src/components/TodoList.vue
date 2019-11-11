@@ -14,7 +14,9 @@
                v-model="todo.title"
                class="todo-item-edit"
                @blur="doneEdit(todo)"
-               @keyup.enter="doneEdit(todo)">
+               @keyup.enter="doneEdit(todo)"
+               v-focus
+        >
       </div>
       <div class="remove-item" @click="removeTodo(index)">
         &times;
@@ -44,6 +46,13 @@
                         'editing': false,
                     },
                 ]
+            }
+        },
+        directives: {
+            focus: {
+                inserted: function (el) {
+                    el.focus()
+                }
             }
         },
         methods:{
