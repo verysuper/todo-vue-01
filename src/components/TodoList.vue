@@ -9,7 +9,12 @@
     <div v-for="(todo,index) in todos" :key="todo.id" class="todo-item">
       <div class="todo-item-left">
         <div v-if="!todo.editing" class="todo-item-label" @dblclick="editTodo(todo)">{{ todo.title }}</div>
-        <input v-else type="text" v-model="todo.title" class="todo-item-edit">
+        <input v-else
+               type="text"
+               v-model="todo.title"
+               class="todo-item-edit"
+               @blur="doneEdit(todo)"
+               @keyup.enter="doneEdit(todo)">
       </div>
       <div class="remove-item" @click="removeTodo(index)">
         &times;
@@ -56,6 +61,9 @@
             },
             editTodo(todo){
                 todo.editing = true;
+            },
+            doneEdit(todo){
+                todo.editing = false;
             },
             removeTodo(index){
                 this.todos.splice(index,1);
