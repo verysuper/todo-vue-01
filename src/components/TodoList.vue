@@ -7,10 +7,9 @@
            @keyup.enter="addTodo"
     >
     <transition-group name="fade" enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutDown">
-      <todo-item v-for="(todo,index) in todosFiltered"
+      <todo-item v-for="todo in todosFiltered"
                  :key="todo.id"
                  :todo="todo"
-                 :index="index"
                  @removedTodo="removeTodo"
                  @finishedEdit="finishedEdit"
                  :checkAll="!anyRemaining"
@@ -112,21 +111,8 @@
                 this.newTodo = '';
                 this.idForTodo++;
             },
-            // editTodo(todo){
-            //     this.beforeEditCache = todo.title;
-            //     todo.editing = true;
-            // },
-            // doneEdit(todo){
-            //     if (todo.title.trim() == '') {
-            //         todo.title = this.beforeEditCache
-            //     }
-            //     todo.editing = false;
-            // },
-            // cancelEdit(todo){
-            //     todo.title = this.beforeEditCache;
-            //     todo.editing = false;
-            // },
-            removeTodo(index){
+            removeTodo(id){
+                const index = this.todos.findIndex((item) => item.id == id)
                 this.todos.splice(index,1);
             },
             checkAllTodos() {
@@ -136,7 +122,8 @@
                 this.todos = this.todos.filter(todo => !todo.completed)
             },
             finishedEdit(data){
-                this.todos.splice(data.index, 1, data.todo)
+                const index = this.todos.findIndex((item) => item.id == data.id)
+                this.todos.splice(index, 1, data)
             }
         }
     }
