@@ -54,6 +54,9 @@
         created(){
             eventBus.$on('pluralize',this.handlePluralize);
         },
+        beforeDestroy() {
+            eventBus.$off('pluralize', this.handlePluralize);
+        },
         watch: {
             checkAll() {
                 this.completed = this.checkAll ? true : this.todo.completed
