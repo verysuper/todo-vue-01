@@ -13,6 +13,7 @@
                  :index="index"
                  @removedTodo="removeTodo"
                  @finishedEdit="finishedEdit"
+                 :checkAll="!anyRemaining"
       >
       </todo-item>
     </transition-group>
