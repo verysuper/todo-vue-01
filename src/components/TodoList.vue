@@ -11,6 +11,8 @@
                  :key="todo.id"
                  :todo="todo"
                  :index="index"
+                 @removedTodo="removeTodo"
+                 @finishedEdit="finishedEdit"
       >
       </todo-item>
     </transition-group>
@@ -116,20 +118,20 @@
                 this.newTodo = '';
                 this.idForTodo++;
             },
-            editTodo(todo){
-                this.beforeEditCache = todo.title;
-                todo.editing = true;
-            },
-            doneEdit(todo){
-                if (todo.title.trim() == '') {
-                    todo.title = this.beforeEditCache
-                }
-                todo.editing = false;
-            },
-            cancelEdit(todo){
-                todo.title = this.beforeEditCache;
-                todo.editing = false;
-            },
+            // editTodo(todo){
+            //     this.beforeEditCache = todo.title;
+            //     todo.editing = true;
+            // },
+            // doneEdit(todo){
+            //     if (todo.title.trim() == '') {
+            //         todo.title = this.beforeEditCache
+            //     }
+            //     todo.editing = false;
+            // },
+            // cancelEdit(todo){
+            //     todo.title = this.beforeEditCache;
+            //     todo.editing = false;
+            // },
             removeTodo(index){
                 this.todos.splice(index,1);
             },
@@ -138,6 +140,9 @@
             },
             clearCompleted() {
                 this.todos = this.todos.filter(todo => !todo.completed)
+            },
+            finishedEdit(data){
+                this.todos.splice(data.index, 1, data.todo)
             }
         }
     }
