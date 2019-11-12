@@ -10,8 +10,6 @@
       <todo-item v-for="todo in todosFiltered"
                  :key="todo.id"
                  :todo="todo"
-                 @removedTodo="removeTodo"
-                 @finishedEdit="finishedEdit"
                  :checkAll="!anyRemaining"
       >
       </todo-item>
@@ -74,6 +72,10 @@
                     },
                 ]
             }
+        },
+        created() {
+            eventBus.$on('removedTodo', (id) => this.removeTodo(id))
+            eventBus.$on('finishedEdit', (data) => this.finishedEdit(data))
         },
         computed:{
             remaining(){
