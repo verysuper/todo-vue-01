@@ -7,29 +7,11 @@
            @keyup.enter="addTodo"
     >
     <transition-group name="fade" enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutDown">
-      <todo-item v-for="(todo,index) in todosFiltered" :key="todo.id" class="todo-item">
-<!--        <div class="todo-item-left">-->
-<!--          <input type="checkbox" v-model="todo.completed">-->
-<!--          <div v-if="!todo.editing"-->
-<!--               class="todo-item-label"-->
-<!--               @dblclick="editTodo(todo)"-->
-<!--               :class="{ completed : todo.completed }"-->
-<!--          >-->
-<!--            {{ todo.title }}-->
-<!--          </div>-->
-<!--          <input v-else-->
-<!--                 type="text"-->
-<!--                 v-model="todo.title"-->
-<!--                 class="todo-item-edit"-->
-<!--                 @blur="doneEdit(todo)"-->
-<!--                 @keyup.enter="doneEdit(todo)"-->
-<!--                 @keyup.esc="cancelEdit(todo)"-->
-<!--                 v-focus-->
-<!--          >-->
-<!--        </div>-->
-<!--        <div class="remove-item" @click="removeTodo(index)">-->
-<!--          &times;-->
-<!--        </div>-->
+      <todo-item v-for="(todo,index) in todosFiltered"
+                 :key="todo.id"
+                 :todo="todo"
+                 :index="index"
+      >
       </todo-item>
     </transition-group>
 
