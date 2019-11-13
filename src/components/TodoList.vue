@@ -17,7 +17,7 @@
 
     <div class="extra-container">
       <todo-check-all :anyRemaining="anyRemaining"></todo-check-all>
-      <todo-items-remaining :remaining="remaining"></todo-items-remaining>
+      <todo-items-remaining></todo-items-remaining>
     </div>
     <div class="extra-container">
       <todo-filtered></todo-filtered>
@@ -69,9 +69,9 @@
             eventBus.$off('clearCompletedTodos')
         },
         computed:{
-            remaining(){
-                return this.$store.getters.remaining
-            },
+            // remaining(){
+            //     return this.$store.getters.remaining
+            // },
             anyRemaining() {
                 return this.$store.getters.anyRemaining
             },
