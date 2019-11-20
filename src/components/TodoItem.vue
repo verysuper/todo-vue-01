@@ -1,48 +1,48 @@
 <template>
-<div class="todo-item">
-  <div class="todo-item-left">
-    <input type="checkbox" v-model="completed" @change="doneEdit">
-    <div v-if="!editing"
-         class="todo-item-label"
-         @dblclick="editTodo"
-         :class="{ completed : completed }"
-    >
-      {{ title }}
+  <div class="todo-item">
+    <div class="todo-item-left">
+      <input type="checkbox" v-model="completed" @change="doneEdit">
+      <div v-if="!editing"
+           class="todo-item-label"
+           @dblclick="editTodo"
+           :class="{ completed : completed }"
+      >
+        {{ title }}
+      </div>
+      <input v-else
+             type="text"
+             v-model="title"
+             class="todo-item-edit"
+             @blur="doneEdit"
+             @keyup.enter="doneEdit"
+             @keyup.esc="cancelEdit"
+             v-focus
+      >
     </div>
-    <input v-else
-           type="text"
-           v-model="title"
-           class="todo-item-edit"
-           @blur="doneEdit"
-           @keyup.enter="doneEdit"
-           @keyup.esc="cancelEdit"
-           v-focus
-    >
-  </div>
-  <div>
-    <button @click="pluralize">Plural</button>
-    <span class="remove-item" @click="removeTodo(todo.id)">
+    <div>
+      <button @click="pluralize">Plural</button>
+      <span class="remove-item" @click="removeTodo(todo.id)">
       &times;
     </span>
-  </div>
+    </div>
 
-</div>
+  </div>
 </template>
 
 <script>
     export default {
         name: "todo-item",
-        props:{
-            todo:{
-                type:Object,
-                required:true,
+        props: {
+            todo: {
+                type: Object,
+                required: true,
             },
             checkAll: {
                 type: Boolean,
                 required: true,
             }
         },
-        data(){
+        data() {
             return {
                 'id': this.todo.id,
                 'title': this.todo.title,
@@ -51,8 +51,8 @@
                 'beforeEditCache': '',
             }
         },
-        created(){
-            eventBus.$on('pluralize',this.handlePluralize);
+        created() {
+            eventBus.$on('pluralize', this.handlePluralize);
         },
         beforeDestroy() {
             eventBus.$off('pluralize', this.handlePluralize);
@@ -69,41 +69,50 @@
                 }
             }
         },
-        methods:{
-            removeTodo(id){
-                eventBus.$emit('removedTodo', id);
+        methods: {
+            removeTodo(id) {
+                const index = this.$store.state.todos.findIndex((item) => item.id == id)
+                this.$store.state.todos.splice(index, 1);
             },
-            editTodo(){
+            editTodo() {
                 this.beforeEditCache = this.title;
                 this.editing = true;
             },
-            doneEdit(){
+            doneEdit() {
                 if (this.title.trim() == '') {
                     this.title = this.beforeEditCache
                 }
                 this.editing = false;
-                eventBus.$emit('finishedEdit', {
+                const index = this.$store.state.todos.findIndex((item) => item.id == this.id)
+                this.$store.state.todos.splice(index, 1, {
                     'id': this.id,
                     'title': this.title,
                     'completed': this.completed,
                     'editing': this.editing,
                 })
+                // eventBus.$emit('finishedEdit', {
+                //     'id': this.id,
+                //     'title': this.title,
+                //     'completed': this.completed,
+                //     'editing': this.editing,
+                // })
             },
-            cancelEdit(){
+            cancelEdit() {
                 this.title = this.beforeEditCache;
                 this.editing = false;
             },
-            pluralize(){
+            pluralize() {
                 eventBus.$emit('pluralize')
             },
-            handlePluralize(){
+            handlePluralize() {
                 this.title = this.title + 's';
-                eventBus.$emit('finishedEdit', {
+                const index = this.$store.state.todos.findIndex((item) => item.id == this.id)
+                this.$store.state.todos.splice(index, 1, {
                     'id': this.id,
                     'title': this.title,
                     'completed': this.completed,
                     'editing': this.editing,
-                });
+                })
             }
         }
     }
