@@ -19,7 +19,7 @@
         },
         methods: {
             allChecked() {
-                this.$store.commit('allChecked',event.target.checked);
+                this.$store.dispatch('allChecked',event.target.checked);
             }
         }
     }
