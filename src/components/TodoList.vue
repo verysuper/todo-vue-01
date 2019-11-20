@@ -73,7 +73,6 @@
                 if (this.newTodo.trim().length == 0) {
                     return
                 }
-
                 this.$store.commit('addTodo',{
                     id: this.idForTodo,
                     title: this.newTodo,

@@ -46,7 +46,9 @@ export const store = new Vuex.Store({
   mutations:{
     addTodo (state, todo) {
       state.todos.push(todo);
+    },
+    clearCompleted(state) {
+      state.todos = state.todos.filter(todo => !todo.completed)
     }
-
   }
 });
