@@ -47,6 +47,17 @@ export const store = new Vuex.Store({
     addTodo (state, todo) {
       state.todos.push(todo);
     },
+    updateTodo(state,todo) {
+      const index = state.todos.findIndex((item) => item.id == todo.id);
+      state.todos.splice(index, 1, todo)
+    },
+    deleteTodo(state,id) {
+      const index = state.todos.findIndex((item) => item.id == id)
+      state.todos.splice(index, 1);
+    },
+    allChecked(state,checked) {
+      state.todos.forEach((todo) => todo.completed = checked)
+    },
     updateFilter(state, filter) {
       state.filter = filter
     },
