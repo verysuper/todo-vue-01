@@ -7,6 +7,7 @@ Vue.use(db);
 
 export const store = new Vuex.Store({
   state:{
+    loading: true,
     filter: 'all',
     todos: []
   },
@@ -59,6 +60,7 @@ export const store = new Vuex.Store({
   },
   actions:{
     retrieveTodos(context){
+      context.state.loading = true;
       let tempTodos = [];
       db.collection('todos').get()
         .then(querySnapshot=>{
@@ -71,6 +73,8 @@ export const store = new Vuex.Store({
             };
             tempTodos.push(data)
           })
+          context.state.loading = false;
+
         });
       let tempTodosSorted = tempTodos.sort((a, b) => {
         return a.timestamp.seconds - b.timestamp.seconds
