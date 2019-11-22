@@ -1,25 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import db from '../firebase'
 
 Vue.use(Vuex);
+Vue.use(db);
 
 export const store = new Vuex.Store({
   state:{
     filter: 'all',
-    todos: [
-      {
-        'id': 1,
-        'title': 'Finish Vue Screencast',
-        'completed': false,
-        'editing': false,
-      },
-      {
-        'id': 2,
-        'title': 'Take over world',
-        'completed': false,
-        'editing': false,
-      },
-    ]
+    todos: []
   },
   getters:{ //reonly
     remaining(state){
@@ -63,9 +52,21 @@ export const store = new Vuex.Store({
     },
     clearCompleted(state) {
       state.todos = state.todos.filter(todo => !todo.completed)
-    }
+    },
+    retrieveTodos(state,todos) {
+      state.todos = todos
+    },
   },
   actions:{
+    retrieveTodos(context){
+      db.collection('todos').get()
+        .then(querySnapshot=>{
+          querySnapshot.forEach(doc=>{
+            console.log(doc.data())
+          })
+        })
+      context.commit('retrieveTodos',[]);
+    },
     addTodo (context, todo) {
       setTimeout(() => {
         context.commit('addTodo', todo)
