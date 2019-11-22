@@ -72,37 +72,68 @@ export const store = new Vuex.Store({
             tempTodos.push(data)
           })
         });
-      context.commit('retrieveTodos',tempTodos);
+      let tempTodosSorted = tempTodos.sort((a, b) => {
+        return a.timestamp.seconds - b.timestamp.seconds
+      })
+      context.commit('retrieveTodos',tempTodosSorted);
     },
     addTodo (context, todo) {
-      setTimeout(() => {
-        context.commit('addTodo', todo)
-      }, 1000)
+      db.collection('todos').add({
+        title:todo.title,
+        completed:false,
+        timestamp:new Date(),
+      })
+        .then(docRef=>{
+          context.commit('addTodo', {
+            id: docRef.id,
+            title: todo.title,
+            completed: false,
+          })
+        })
     },
     updateTodo(context,todo) {
-      setTimeout(() => {
-        context.commit('updateTodo',todo);
-      }, 1000)
+      db.collection('todos').doc(todo.id).set({
+        id: todo.id,
+        title: todo.title,
+        completed: todo.completed,
+        timestamp: new Date(),
+      })
+        .then(()=>{
+          context.commit('updateTodo',todo);
+        })
     },
     deleteTodo(context,id) {
-      setTimeout(() => {
-        context.commit('deleteTodo',id);
-      }, 1000)
+      db.collection('todos').doc(id).delete()
+        .then(()=>{
+          context.commit('deleteTodo',id);
+        })
     },
     allChecked(context,checked) {
-      setTimeout(() => {
-        context.commit('allChecked',checked);
-      }, 1000)
+      db.collection('todos').get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            doc.ref.update({
+              completed: checked
+            })
+              .then(() => {
+                context.commit('allChecked', checked)
+              })
+          })
+        })
     },
     updateFilter(context, filter) {
-      setTimeout(() => {
-        context.commit('updateFilter',filter);
-      }, 1000)
+      context.commit('updateFilter',filter);
     },
     clearCompleted(context) {
-      setTimeout(() => {
-        context.commit('clearCompleted');
-      }, 1000)
+      db.collection('todos').where('completed', '==', true).get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            doc.ref.delete()
+              .then(() => {
+                context.commit('clearCompleted')
+              })
+          })
+        })
     }
   }
 });
