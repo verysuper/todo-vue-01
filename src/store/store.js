@@ -59,13 +59,20 @@ export const store = new Vuex.Store({
   },
   actions:{
     retrieveTodos(context){
+      let tempTodos = [];
       db.collection('todos').get()
         .then(querySnapshot=>{
           querySnapshot.forEach(doc=>{
-            console.log(doc.data())
+            const data = {
+              id: doc.id,
+              title: doc.data().title,
+              completed: doc.data().completed,
+              timestamp: doc.data().timestamp,
+            };
+            tempTodos.push(data)
           })
-        })
-      context.commit('retrieveTodos',[]);
+        });
+      context.commit('retrieveTodos',tempTodos);
     },
     addTodo (context, todo) {
       setTimeout(() => {
