@@ -3,6 +3,7 @@ import LandingPage from './components/marketing/LandingPage'
 import About from './components/marketing/AboutPage'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
+import TestTodosVariable from './components/marketing/TestTodosVariable'
 
 const routes = [
   {
@@ -29,6 +30,11 @@ const routes = [
     path: '/register',
     name: 'register',
     component: Register
+  },
+  {
+    path: '/todos/:id',
+    name: 'todos',
+    component: TestTodosVariable
   }
 ]
 
