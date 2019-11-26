@@ -7,7 +7,7 @@ Vue.use(db);
 
 export const store = new Vuex.Store({
   state:{
-    loading: true,
+    loading: false,
     filter: 'all',
     todos: []
   },
@@ -43,7 +43,9 @@ export const store = new Vuex.Store({
     },
     deleteTodo(state,id) {
       const index = state.todos.findIndex((item) => item.id == id)
-      state.todos.splice(index, 1);
+      if(index >= 0){
+        state.todos.splice(index, 1);
+      }
     },
     allChecked(state,checked) {
       state.todos.forEach((todo) => todo.completed = checked)
@@ -59,6 +61,34 @@ export const store = new Vuex.Store({
     },
   },
   actions:{
+    initRealtimeListeners(context){
+      db.collection('todos').onSnapshot(snapshot=>{
+        const source = snapshot.metadata.hasPendingWrites ? 'Local':'Server';
+        includeMetadataChanges: true; // Listen for document metadata changes
+        snapshot.docChanges().forEach(change=>{
+          if(change.type === 'added'){
+            if(source === 'Server'){
+              context.commit('addTodo',{
+                id: change.doc.id,
+                title: change.doc.data().title,
+                completed: change.doc.data().completed,
+              })
+            }
+          }
+          if(change.type === 'modified'){
+            context.commit('updateTodo',{
+              id: change.doc.id,
+              title: change.doc.data().title,
+              timestamp:new Date(),
+              completed: change.doc.data().completed,
+            })
+          }
+          if(change.type === 'removed'){
+            context.commit('deleteTodo',change.doc.id);
+          }
+        })
+      })
+    },
     retrieveTodos(context){
       context.state.loading = true;
       let tempTodos = [];
@@ -100,8 +130,8 @@ export const store = new Vuex.Store({
         id: todo.id,
         title: todo.title,
         completed: todo.completed,
-        timestamp: new Date(),
-      })
+        // timestamp: new Date(),
+      },{merge:true})
         .then(()=>{
           context.commit('updateTodo',todo);
         })

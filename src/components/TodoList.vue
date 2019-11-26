@@ -58,7 +58,9 @@
             }
         },
         created(){
-            this.$store.dispatch('retrieveTodos')
+            // this.$store.dispatch('retrieveTodos');
+            //監聽器載入第一次為伺服器全部數據
+            this.$store.dispatch('initRealtimeListeners');
         },
         computed:{
             // remaining(){
