@@ -1,10 +1,12 @@
 <template>
-
+  <div class="flex-center">
+    Content for About Page
+  </div>
 </template>
 
 <script>
     export default {
-        name: "AboutPage"
+
     }
 </script>
 
