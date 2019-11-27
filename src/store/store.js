@@ -12,6 +12,9 @@ export const store = new Vuex.Store({
     todos: []
   },
   getters:{ //reonly
+    loggedIn(state) {
+      return state.token !== null
+    },
     remaining(state){
       return state.todos.filter(todo => !todo.completed).length;
     },
