@@ -65,9 +65,15 @@ export const store = new Vuex.Store({
     },
     destroyToken(state){
       state.token = null;
-    }
+    },
+    clearTodos(state) {
+      state.todos = []
+    },
   },
   actions:{
+    clearTodos(context) {
+      context.commit('clearTodos')
+    },
     register(context, data) {
       return new Promise((resolve, reject) => {
         axios.post('/register', {
