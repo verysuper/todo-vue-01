@@ -111,6 +111,62 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  .todo-item {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation-duration: 0.2s;
+  }
+  .remove-item {
+    cursor: pointer;
+    margin-left: 14px;
+    &:hover {
+      color: black;
+    }
+  }
+  .todo-item-left { // later
+    display: flex;
+    align-items: center;
+  }
 
+  .todo-item-label {
+    padding: 10px;
+    border: 1px solid white;
+    margin-left: 12px;
+  }
+
+  .todo-item-edit {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-left: 12px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc; //override defaults
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+
+    &:focus {
+      outline: none;
+    }
+  }
+  .completed {
+    text-decoration: line-through;
+    color: grey;
+  }
+
+  button {
+    font-size: 14px;
+    background-color: white;
+    appearance: none;
+    padding: 4px;
+
+    &:hover {
+      background: lightgreen;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
 </style>

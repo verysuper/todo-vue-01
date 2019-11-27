@@ -17,16 +17,16 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
-* {
-  box-sizing: border-box;
-}
+/** {*/
+/*  box-sizing: border-box;*/
+/*}*/
 
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-}
+/*.container {*/
+/*  max-width: 600px;*/
+/*  margin: 0 auto;*/
+/*}*/
 
 
 /*#app {*/

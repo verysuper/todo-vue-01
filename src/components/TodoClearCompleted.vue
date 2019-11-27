@@ -20,6 +20,19 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  button {
+    font-size: 14px;
+    background-color: white;
+    appearance: none;
+    padding: 4px;
 
+    &:hover {
+      background: lightgreen;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
 </style>
