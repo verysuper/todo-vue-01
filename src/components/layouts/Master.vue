@@ -17,17 +17,12 @@
     }
 </script>
 
-<style>
+<style lang="scss">
 
   * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-  }
-
-  .container {
-    max-width: 600px;
-    margin: 0 auto;
   }
 
   #app {
@@ -63,6 +58,55 @@
     letter-spacing: .1rem;
     text-decoration: none;
     text-transform: uppercase;
+  }
+
+  // Auth Pages
+
+  label {
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .login-heading {
+    margin-bottom: 16px;
+  }
+
+  .form-control {
+    margin-bottom: 24px;
+  }
+
+  .mb-more {
+    margin-bottom: 42px;
+  }
+
+  .login-form {
+    max-width: 500px;
+    margin: auto;
+  }
+
+  .login-input {
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 16px;
+    outline: 0;
+    border-radius: 3px;
+    border: 1px solid lightgrey;
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 14px 12px;
+    font-size: 18px;
+    font-weight: bold;
+    /*background: #60BD4F;*/
+    /*color: white;*/
+    border-radius: 3px;
+    cursor: pointer;
+
+    &:hover {
+      background: darken(#60BD4F, 10%);
+    }
+
   }
 
 </style>
