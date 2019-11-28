@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="name-container">
+      Welcome, {{ name }}
+    </div>
     <input type="text"
            class="todo-input"
            placeholder="what needs to be done"
@@ -52,10 +55,15 @@
                 newTodo:'',
                 idForTodo:3,
                 beforeEditCache:'',
+                name: '',
             }
         },
         created(){
             this.$store.dispatch('retrieveTodos');
+            this.$store.dispatch('retrieveName')
+                .then(response => {
+                    this.name = response.data.name
+                })
         },
         computed:{
             // remaining(){
@@ -156,6 +164,10 @@
     border-top: 1px solid lightgrey;
     padding-top: 14px;
     margin-bottom: 14px;
+  }
+
+  .name-container {
+    margin-bottom: 16px;
   }
 
   /*button {*/
