@@ -1,7 +1,7 @@
 <template>
   <div class="login-form">
     <h2 class="login-heading">Register</h2>
-    <form action="#" @submit.prevent="register">
+    <form action="#" @submit.prevent="validateBeforeSubmit">
 
       <div v-if="serverErrors" class="server-error">
         <div v-for="(value, key) in serverErrors" :key="key">
@@ -59,6 +59,14 @@
             }
         },
         methods: {
+            validateBeforeSubmit() {
+                this.$validator.validateAll().then((result) => {
+                    if (result) {
+                        // eslint-disable-next-line
+                        this.register()
+                    }
+                })
+            },
             register() {
                 this.$store.dispatch('register', {
                     name: this.name,
