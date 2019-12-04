@@ -3,6 +3,8 @@
     <h2 class="login-heading">Register</h2>
     <form action="#" @submit.prevent="validateBeforeSubmit">
 
+      <div v-if="successMessage" class="success-message">{{ successMessage }}</div>
+
       <div v-if="serverErrors" class="server-error">
         <div v-for="(value, key) in serverErrors" :key="key">
           {{ value[0] }}
@@ -55,7 +57,8 @@
                 name: '',
                 email: '',
                 password: '',
-                serverErrors: ''
+                serverErrors: '',
+                successMessage: '',
             }
         },
         methods: {
@@ -73,7 +76,8 @@
                     email: this.email,
                     password: this.password,
                 }).then(response => {
-                    this.$router.push({ name: 'login' })
+                    // this.$router.push({ name: 'login' })
+                    this.successMessage = 'Registered Successfully!'
                 }).catch(error => {
                     this.serverErrors = Object.values(error.response.data.errors)
                 })
