@@ -128,5 +128,14 @@
     border-radius: 4px;
   }
 
+  .form-error {
+    font-size: 16px;
+    color: #a94442;
+  }
+
+  .input-error {
+    border: 1px solid red;
+  }
+
 </style>
 

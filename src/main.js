@@ -5,12 +5,13 @@ import VueRouter from 'vue-router'
 import routes from './routes'
 import Master from './components/layouts/Master'
 import { store } from './store/store'
+import VeeValidate from 'vee-validate'
 
 window.eventBus = new Vue();
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)
-
+Vue.use(VeeValidate)
 
 
 const router = new VueRouter({
