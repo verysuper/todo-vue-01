@@ -3,7 +3,7 @@
     <h2 class="login-heading">Login</h2>
     <form action="#" @submit.prevent="login">
 
-      <div v-if="dataSuccessMessage" class="success-message">{{ dataSuccessMessage }}</div>
+      <div v-if="successMessage" class="success-message">{{ successMessage }}</div>
       <div v-if="serverError" class="server-error">{{ serverError }}</div>
 
       <div class="form-control">
@@ -37,6 +37,7 @@
                 username: '',
                 password: '',
                 serverError: '',
+                successMessage: this.dataSuccessMessage,
             }
         },
         methods: {
@@ -49,6 +50,7 @@
                 }).catch(error => {
                     this.serverError = error.response.data;
                     this.password = '';
+                    this.successMessage = ''
                 })
             }
         }
