@@ -23,6 +23,7 @@
 </script>
 
 <style lang="scss">
+  @import url('cxlt-vue2-toastr/dist/css/cxlt-vue2-toastr.css');
 
   * {
     box-sizing: border-box;

@@ -51,6 +51,12 @@
 
 <script>
     export default {
+        created(){
+          this.$toast.success({
+              title:'Registered Successfully!',
+              message:'you can login here'
+          })
+        },
         name: "Register",
         data() {
             return {
