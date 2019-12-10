@@ -51,12 +51,6 @@
 
 <script>
     export default {
-        created(){
-          this.$toast.success({
-              title:'Registered Successfully!',
-              message:'you can login here'
-          })
-        },
         name: "Register",
         data() {
             return {
@@ -84,7 +78,10 @@
                 }).then(response => {
                     this.successMessage = 'Registered Successfully!'
                     this.$router.push({ name: 'login', params: { dataSuccessMessage: this.successMessage } })
-
+                    this.$toast.success({
+                        title: this.successMessage,
+                        message: 'You can login here'
+                    })
                 }).catch(error => {
                     this.serverErrors = Object.values(error.response.data.errors)
                 })
