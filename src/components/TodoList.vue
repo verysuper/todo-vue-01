@@ -98,7 +98,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css");
 
   .todo-input {
     width: 100%;
